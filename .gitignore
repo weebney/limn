@@ -1,0 +1,4 @@
+bin/
+.cache/
+.zed/
+.zig-cache/

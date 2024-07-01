@@ -1,0 +1,18 @@
+---
+BasedOnStyle: Google
+UseTab: Always
+IndentWidth: 8
+TabWidth: 8
+ColumnLimit: 128
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlignTrailingComments: true
+SpacesBeforeTrailingComments: 1
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpacesInContainerLiterals: false
+BreakBeforeBraces: Attach

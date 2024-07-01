@@ -1,0 +1,27 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Werror",
+      "-fstack-protector-strong",
+      "-fPIE",
+      "-D_FORTIFY_SOURCE=2",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "-fvisibility=hidden",
+      "-o",
+      "./bin/limn",
+      "limn.c"
+    ],
+    "directory": "/Users/weeb/Developer/limn",
+    "file": "/Users/weeb/Developer/limn/limn.c",
+    "output": "/Users/weeb/Developer/limn/bin/limn"
+  }
+]
