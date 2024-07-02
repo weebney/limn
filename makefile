@@ -15,7 +15,8 @@ SRC = limn.c
 CFLAGS = -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Werror \
          -fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2 \
          -fsanitize=undefined -fno-sanitize-recover=all \
-         -fvisibility=hidden
+         -fvisibility=hidden \
+         `jemalloc-config --libdir`/libjemalloc.a `jemalloc-config --libs`
 
 # Linker flags
 UNAME_S := $(shell uname -s)
