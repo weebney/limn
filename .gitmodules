@@ -1,3 +1,6 @@
 [submodule "lib/raylib"]
 	path = lib/raylib
 	url = https://github.com/raysan5/raylib
+[submodule "lib/tfd"]
+	path = lib/tfd
+	url = https://git.code.sf.net/p/tinyfiledialogs/code
