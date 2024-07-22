@@ -1,0 +1,5 @@
+[wrap-git]
+directory=raylib
+url=https://github.com/weebney/raylib-meson
+revision=2678b64cc7e19ece2640f0fa0d99ef05245d674d
+clone-recursive=true

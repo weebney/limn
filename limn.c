@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "lib/raylib/src/raylib.h"
+#include "lib/tfd/tinyfiledialogs.h"
 
 int main(void) {
 	struct Layer {
@@ -63,7 +64,7 @@ int main(void) {
 	state.palette[7] = BROWN;
 	state.palette[8] = GREEN;
 	state.palette[9] = RED;
-	state.palette[10] = RED;
+	state.palette[10] = YELLOW;
 	state.palette[11] = RED;
 	state.palette[12] = RED;
 	state.palette[13] = RED;
@@ -91,14 +92,15 @@ int main(void) {
 	state.palette[35] = RED;
 
 	// DEBUG create initial layer
-	state.layers[2].texture = LoadTexture("mikured_miku.png");
+	// state.layers[2].texture = LoadTexture("/Users/weeb/Developer/limn/mikured_miku.png");
+	state.layers[2].texture = LoadTextureFromImage(GenImageColor(80, 80, BLANK));
 	state.layers[2].visible = true;
 	state.layerCount += 1;
 	state.width = state.layers[2].texture.width;
 	state.height = state.layers[2].texture.height;
 
 	// DEBUG create initial layer
-	state.layers[0].texture = LoadTextureFromImage(GenImageColor(state.width, state.height, RED));
+	state.layers[0].texture = LoadTextureFromImage(GenImageColor(state.width, state.height, (Color){125, 123, 155, 130}));
 	state.layers[0].visible = true;
 	state.layerCount += 1;
 
@@ -112,6 +114,7 @@ int main(void) {
 	bool compositeDirty = true;
 	bool isPainting = false;
 	double scrollZoomCooldown = GetTime();
+	Texture2D substageTexture = LoadTextureFromImage(GenImageChecked(state.width, state.height, 4, 4, WHITE, GRAY));
 
 	while (!WindowShouldClose()) {
 		if (IsWindowState(FLAG_WINDOW_UNFOCUSED | FLAG_WINDOW_HIDDEN | FLAG_WINDOW_MINIMIZED)) {
@@ -178,7 +181,7 @@ int main(void) {
 			mousePos.x = (mousePos.x - stageX) / pixelSize;
 			mousePos.y = state.height - (mousePos.y - stageY) / pixelSize; // Flip Y-coordinate
 
-			// Paint into render texture
+			// paint into render texture
 			if (!isPainting) {
 				state.paintBuffer = LoadRenderTexture(state.width, state.height);
 				BeginTextureMode(state.paintBuffer);
@@ -216,12 +219,13 @@ int main(void) {
 		// compositing
 		if (compositeDirty) {
 			BeginTextureMode(composite);
+			DrawTextureRec(substageTexture, (Rectangle){0, 0, state.width, state.height}, (Vector2){0, 0}, WHITE);
 			for (int i = 0; i < state.layerCount; i++) {
 				if (state.layers[i].visible) {
 					Texture2D* tex = &state.layers[i].texture;
 					DrawTextureRec(*tex, (Rectangle){0, 0, state.width, state.height}, (Vector2){0, 0},
 						       WHITE);
-					// inject paint buffer
+					// inject paint buffer into current layer
 					if (i == state.layerCurrent) {
 						DrawTextureRec(state.paintBuffer.texture,
 							       (Rectangle){0, 0, state.width, state.height}, (Vector2){0, 0},
@@ -258,7 +262,8 @@ int main(void) {
 				int paletteOffset = (i % 2 != 0) ? 12 : 0;
 				Rectangle paletteSelectionRect = {paletteX + (i * 12) - paletteOffset,
 								  paletteY + (2 * paletteOffset), 24, 24};
-				if (CheckCollisionPointRec(GetMousePosition(), paletteSelectionRect)) {
+				if (CheckCollisionPointRec(GetMousePosition(), paletteSelectionRect) &&
+				    IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !GetKeyPressed()) {
 					state.paletteCurrent = i;
 				}
 				DrawRectangleRec(paletteSelectionRect, state.palette[i]);
@@ -289,10 +294,11 @@ int main(void) {
 //
 // UI
 // new/open/save/etc
-// palette
 // cute cursors
+// palette loading and exporting
+// palette last used colors and current selection
 //
-// layers & layer browser
+// layerswitching & layer browser
 // merge layer down
 // layer reordering
 //

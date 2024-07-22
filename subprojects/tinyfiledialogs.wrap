@@ -1,0 +1,5 @@
+[wrap-git]
+directory=tinyfiledialogs
+url=https://github.com/weebney/tinyfiledialogs-meson
+revision=e2f4ddcbf40cf18476c5bee681a998e93357e64a
+clone-recursive=true
